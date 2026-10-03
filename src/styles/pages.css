@@ -1,0 +1,392 @@
+/* ───────── Страницы ───────── */
+.page {
+  max-width: 1320px;
+  margin: 0 auto;
+}
+.page--narrow {
+  max-width: 880px;
+}
+.page-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+.page-title {
+  font-family: var(--font-display);
+  font-size: calc(32px * var(--ts, 1));
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.hero {
+  margin: 6px 0 26px;
+}
+.hero__title {
+  font-family: var(--font-display);
+  font-size: calc(40px * var(--ts, 1));
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  background: linear-gradient(100deg, var(--text) 30%, rgba(var(--accent-rgb), 1));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.hero__subtitle {
+  margin-top: 4px;
+  color: var(--text-2);
+  font-size: calc(15px * var(--ts, 1));
+}
+
+/* Шапка коллекции (плейлист, любимые) */
+.collection-header {
+  display: flex;
+  align-items: flex-end;
+  gap: 28px;
+  margin-bottom: 26px;
+}
+.collection-art {
+  width: 216px !important;
+  height: 216px !important;
+  flex-shrink: 0;
+  border-radius: calc(14px * var(--shape-k, 1));
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+}
+.collection-art svg {
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.25));
+}
+.collection-header__info {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.collection-header__title {
+  font-family: var(--font-display);
+  font-size: clamp(30px, 4.2vw, 56px);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  overflow-wrap: anywhere;
+}
+.collection-header__desc {
+  max-width: 680px;
+  color: var(--text-2);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.collection-header__meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  color: var(--text-2);
+  font-size: calc(13.5px * var(--ts, 1));
+}
+.collection-header__meta > * + *::before {
+  content: "·";
+  margin: 0 8px;
+  color: var(--text-3);
+}
+.collection-header__meta strong {
+  color: var(--text);
+  font-weight: 600;
+}
+.collection-header__actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+/* Исполнитель */
+.artist-header {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  gap: 28px;
+  margin: -28px -34px 26px;
+  padding: 72px 34px 28px;
+  overflow: hidden;
+}
+.artist-header__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  mask-image: linear-gradient(#000 40%, transparent);
+}
+.artist-header__bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(40px) saturate(1.4);
+  opacity: 0.5;
+  transform: scale(1.2);
+}
+.artist-header__avatar {
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+  border: 3px solid var(--stroke-2);
+}
+.artist-header__info {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.artist-header__name {
+  font-family: var(--font-display);
+  font-size: clamp(34px, 5vw, 68px);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  overflow-wrap: anywhere;
+}
+.verified {
+  color: #6aa8ff;
+}
+.artist-bio {
+  max-width: 760px;
+  margin: -6px 0 28px;
+  color: var(--text-2);
+  white-space: pre-line;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  user-select: text;
+}
+
+/* Жанр */
+.genre-header {
+  position: relative;
+  margin: -28px -34px 24px;
+  padding: 80px 34px 28px;
+  overflow: hidden;
+  background: linear-gradient(160deg, var(--g1), var(--g2) 60%, transparent);
+  mask-image: linear-gradient(#000 70%, transparent);
+}
+.genre-header .eyebrow {
+  color: rgba(255, 255, 255, 0.85);
+}
+.genre-header__title {
+  margin: 6px 0 12px;
+  font-family: var(--font-display);
+  font-size: clamp(40px, 6vw, 76px);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  color: #fff;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* ───────── Настройки ───────── */
+.settings-block {
+  margin-bottom: 28px;
+}
+.settings-block__title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  font-family: var(--font-display);
+  font-size: calc(17px * var(--ts, 1));
+  font-weight: 600;
+  color: var(--text);
+}
+.settings-block__title svg {
+  color: var(--accent);
+}
+.settings-block__body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 64px;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--layer);
+  border: 1px solid var(--stroke);
+}
+.setting-row__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.setting-row__label {
+  font-weight: 500;
+}
+.setting-row__desc {
+  font-size: calc(12.5px * var(--ts, 1));
+  color: var(--text-3);
+}
+
+.eq {
+  padding: 16px;
+  border-radius: var(--radius-sm);
+  background: var(--layer);
+  border: 1px solid var(--stroke);
+  transition: opacity var(--dur-2);
+}
+.eq.is-disabled {
+  opacity: 0.45;
+}
+.eq__presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+.eq__bands {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 6px;
+}
+.eq__band {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.eq__value,
+.eq__freq {
+  font-size: calc(11.5px * var(--ts, 1));
+  font-variant-numeric: tabular-nums;
+  color: var(--text-3);
+}
+.eq__slider {
+  -webkit-appearance: none;
+  appearance: none;
+  writing-mode: vertical-lr;
+  direction: rtl;
+  width: 6px;
+  height: 140px;
+  border-radius: 999px;
+  background: linear-gradient(to top, var(--accent) var(--fill, 50%), var(--stroke-2) var(--fill, 50%));
+  cursor: default;
+}
+.eq__slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.35), 0 0 0 4px rgba(var(--accent-rgb), 0.25);
+}
+
+.shortcuts {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4px;
+}
+.shortcuts__row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--layer);
+  border: 1px solid var(--stroke);
+  font-size: calc(13px * var(--ts, 1));
+  color: var(--text-2);
+}
+.shortcuts__row kbd {
+  color: var(--text);
+}
+
+.about {
+  padding: 16px;
+  border-radius: var(--radius-sm);
+  background: var(--layer);
+  border: 1px solid var(--stroke);
+  color: var(--text-2);
+  line-height: 1.6;
+}
+.about strong {
+  color: var(--text);
+}
+
+.sources {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.source-card {
+  padding: 16px;
+  border-radius: var(--radius-md);
+  background: var(--layer);
+  border: 1px solid var(--stroke);
+}
+.source-card__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.source-card__head .btn {
+  margin-left: auto;
+}
+.source-card__hint {
+  margin: 8px 0 12px;
+  font-size: calc(12.5px * var(--ts, 1));
+  color: var(--text-3);
+}
+.source-card__fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 10px;
+}
+.source-card__links {
+  display: flex;
+  gap: 16px;
+  margin-top: 10px;
+}
+.source-card__result {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 8px 12px;
+  border-radius: calc(8px * var(--shape-k, 1));
+  font-size: calc(13px * var(--ts, 1));
+}
+.source-card__result.is-ok {
+  color: var(--success);
+  background: rgba(94, 226, 160, 0.1);
+}
+.source-card__result.is-error {
+  color: var(--danger);
+  background: rgba(255, 90, 90, 0.1);
+  word-break: break-word;
+}
+.status {
+  font-size: calc(12px * var(--ts, 1));
+  color: var(--text-3);
+}
+.status--ok {
+  color: var(--success);
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: calc(12.5px * var(--ts, 1));
+  color: var(--text-2);
+}
+.settings-save {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 6px;
+}
+.settings-save .muted {
+  font-size: calc(12px * var(--ts, 1));
+}

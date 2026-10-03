@@ -1,0 +1,80 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Frost",
+  "version": "0.9.1",
+  "identifier": "app.frost.player",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "npm run build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "withGlobalTauri": false,
+    "windows": [
+      {
+        "label": "main",
+        "title": "Frost",
+        "dragDropEnabled": false,
+        "width": 1280,
+        "height": 820,
+        "minWidth": 960,
+        "minHeight": 620,
+        "center": true,
+        "resizable": true,
+        "decorations": false,
+        "transparent": true,
+        "shadow": true,
+        "windowEffects": {
+          "effects": [
+            "blur"
+          ]
+        },
+        "additionalBrowserArgs": "--disable-features=msWebOOUI,msPdfOOUI,msSmartScreenProtection --enable-features=HardwareMediaKeyHandling --autoplay-policy=no-user-gesture-required"
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self' ipc: http://ipc.localhost; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https: http: asset: http://asset.localhost frost: http://frost.localhost; media-src 'self' data: blob: https: asset: http://asset.localhost frost: http://frost.localhost; connect-src 'self' ipc: http://ipc.localhost https: asset: http://asset.localhost frost: http://frost.localhost blob: data:; font-src 'self' data:; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'none'",
+      "devCsp": null,
+      "dangerousDisableAssetCspModification": [
+        "style-src"
+      ],
+      "assetProtocol": {
+        "enable": true,
+        "scope": []
+      }
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": [
+      "nsis",
+      "msi"
+    ],
+    "publisher": "Frost",
+    "homepage": "https://github.com/Maminoradost/frost",
+    "copyright": "Copyright (c) 2026 Frost contributors",
+    "license": "GPL-3.0-or-later",
+    "category": "Music",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.ico"
+    ],
+    "windows": {
+      "webviewInstallMode": {
+        "type": "downloadBootstrapper"
+      },
+      "nsis": {
+        "languages": [
+          "Russian",
+          "English"
+        ],
+        "displayLanguageSelector": false
+      }
+    },
+    "shortDescription": "Музыкальный плеер: YouTube Music и SoundCloud в стиле Material You",
+    "longDescription": "Frost: музыкальный плеер для Windows 10 и 11. YouTube Music и SoundCloud без аккаунтов и ключей, тексты песен (LRCLIB, YouTube Music, Genius), цвета Material You из обложки, эквалайзер и таймер сна."
+  }
+}

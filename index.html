@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="ru" data-theme="dark" data-backdrop="glass">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Frost</title>
+    <script>
+      // Тема и фон окна до загрузки приложения, чтобы не мигнула не та тема
+      (function () {
+        try {
+          var raw = localStorage.getItem('frost.settings');
+          var st = raw ? JSON.parse(raw).state : null;
+          if (st && st.theme) document.documentElement.setAttribute('data-theme', st.theme);
+          if (st && st.backdrop) {
+            document.documentElement.setAttribute('data-backdrop', st.reduceTransparency ? 'none' : st.backdrop);
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <style>
+      /* ───── Заставка Frost: логотип собирается за ~1,2 с, затем растворяется ───── */
+      #splash {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: grid;
+        place-items: center;
+        background: rgba(22, 18, 28, 0.8);
+        color: #ece6f0;
+        font-family: "Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif;
+        user-select: none;
+        cursor: default;
+        transition:
+          opacity 0.42s cubic-bezier(0.2, 0, 0, 1),
+          transform 0.42s cubic-bezier(0.2, 0, 0, 1),
+          filter 0.42s cubic-bezier(0.2, 0, 0, 1);
+      }
+      [data-theme="light"] #splash {
+        background: rgba(250, 247, 252, 0.84);
+        color: #1d1b20;
+      }
+      [data-backdrop="none"] #splash {
+        background: #141218;
+      }
+      [data-theme="light"][data-backdrop="none"] #splash {
+        background: #fef7ff;
+      }
+      #splash.splash--out {
+        opacity: 0;
+        transform: scale(1.06);
+        filter: blur(6px);
+        pointer-events: none;
+      }
+      .splash__stage {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        pointer-events: none;
+      }
+      .splash__logo {
+        position: relative;
+        width: 112px;
+        height: 112px;
+      }
+      .splash__glow {
+        position: absolute;
+        inset: -46px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(176, 152, 255, 0.55), rgba(159, 180, 255, 0.18) 45%, transparent 68%);
+        opacity: 0;
+        animation: sp-glow 1.4s 0.12s cubic-bezier(0.2, 0, 0, 1) forwards;
+      }
+      .splash__svg {
+        position: relative;
+        width: 112px;
+        height: 112px;
+        overflow: visible;
+      }
+      .sp-tile {
+        transform-box: fill-box;
+        transform-origin: center;
+        animation: sp-tile 0.72s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+      }
+      .sp-ring {
+        stroke-dasharray: 34;
+        stroke-dashoffset: 34;
+        transform-box: fill-box;
+        transform-origin: center;
+        animation:
+          sp-draw 0.62s 0.26s cubic-bezier(0.65, 0, 0.35, 1) forwards,
+          sp-breathe 1.8s 1.3s ease-in-out infinite alternate;
+      }
+      .sp-dot {
+        transform-box: fill-box;
+        transform-origin: center;
+        transform: scale(0);
+        animation: sp-pop 0.42s 0.62s cubic-bezier(0.34, 1.8, 0.64, 1) forwards;
+      }
+      .sp-spark {
+        opacity: 0;
+        transform-box: fill-box;
+        transform-origin: center;
+        animation: sp-spark 0.7s 0.72s cubic-bezier(0.2, 0, 0, 1) forwards;
+      }
+      .splash__word {
+        font-size: 30px;
+        font-weight: 600;
+        letter-spacing: 0.5em;
+        margin-right: -0.5em;
+        opacity: 0;
+        animation: sp-word 0.6s 0.52s cubic-bezier(0.2, 0, 0, 1) forwards;
+      }
+      @keyframes sp-tile {
+        from {
+          transform: scale(0.45) rotate(-24deg);
+          opacity: 0;
+        }
+        to {
+          transform: none;
+          opacity: 1;
+        }
+      }
+      @keyframes sp-draw {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+      @keyframes sp-breathe {
+        to {
+          transform: scale(1.08);
+        }
+      }
+      @keyframes sp-pop {
+        to {
+          transform: scale(1);
+        }
+      }
+      @keyframes sp-spark {
+        0% {
+          opacity: 0;
+          transform: translate(0, 0) scale(0.2);
+        }
+        35% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+          transform: translate(var(--dx), var(--dy)) scale(1) rotate(45deg);
+        }
+      }
+      @keyframes sp-glow {
+        50% {
+          opacity: 1;
+        }
+        to {
+          opacity: 0.55;
+        }
+      }
+      @keyframes sp-word {
+        to {
+          opacity: 1;
+          letter-spacing: 0.08em;
+          margin-right: -0.08em;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #splash *,
+        #splash {
+          animation-duration: 1ms !important;
+          animation-delay: 0s !important;
+          transition-duration: 120ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="splash" data-tauri-drag-region aria-hidden="true">
+      <div class="splash__stage">
+        <div class="splash__logo">
+          <div class="splash__glow"></div>
+          <svg class="splash__svg" viewBox="0 0 24 24">
+            <defs>
+              <linearGradient id="spg" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#9fb4ff" />
+                <stop offset="1" stop-color="#c69bff" />
+              </linearGradient>
+            </defs>
+            <rect class="sp-tile" x="1" y="1" width="22" height="22" rx="7" fill="url(#spg)" />
+            <!-- Кольцо рисуется контуром от верхней точки по часовой стрелке. Без атрибута transform:
+                 вместе с transform-box: fill-box он сдвигал кольцо под логотип, на надпись -->
+            <path class="sp-ring" d="M12 6.6a5.4 5.4 0 1 1 0 10.8a5.4 5.4 0 1 1 0-10.8" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" />
+            <circle class="sp-dot" cx="12" cy="12" r="1.7" fill="#fff" />
+            <g fill="#fff">
+              <path class="sp-spark" style="--dx: 0px; --dy: -7px" d="M12 3.2l.5 1 1 .5-1 .5-.5 1-.5-1-1-.5 1-.5z" />
+              <path class="sp-spark" style="--dx: 6px; --dy: -3.5px" d="M19.6 7.6l.5 1 1 .5-1 .5-.5 1-.5-1-1-.5 1-.5z" />
+              <path class="sp-spark" style="--dx: 6px; --dy: 3.5px" d="M19.6 14.4l.5 1 1 .5-1 .5-.5 1-.5-1-1-.5 1-.5z" />
+              <path class="sp-spark" style="--dx: 0px; --dy: 7px" d="M12 18.8l.5 1 1 .5-1 .5-.5 1-.5-1-1-.5 1-.5z" />
+              <path class="sp-spark" style="--dx: -6px; --dy: 3.5px" d="M4.4 14.4l.5 1 1 .5-1 .5-.5 1-.5-1-1-.5 1-.5z" />
+              <path class="sp-spark" style="--dx: -6px; --dy: -3.5px" d="M4.4 7.6l.5 1 1 .5-1 .5-.5 1-.5-1-1-.5 1-.5z" />
+            </g>
+          </svg>
+        </div>
+        <div class="splash__word">Frost</div>
+      </div>
+    </div>
+    <script>
+      // Заставку убирает приложение (window.__frostSplashDone), но не раньше MIN мс;
+      // если что-то пошло не так, она исчезнет сама через 8 секунд.
+      (function () {
+        // Мини-плеер: без заставки и с прозрачным фоном окна
+        if (location.hash === '#mini') {
+          document.documentElement.classList.add('is-mini');
+          var sp = document.getElementById('splash');
+          if (sp && sp.parentNode) sp.parentNode.removeChild(sp);
+          window.__frostSplashDone = function () {};
+          return;
+        }
+        var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var MIN = reduce ? 250 : 1150;
+        var start = performance.now();
+        var gone = false;
+        function hide() {
+          if (gone) return;
+          gone = true;
+          var el = document.getElementById('splash');
+          if (!el) return;
+          setTimeout(function () {
+            el.classList.add('splash--out');
+            setTimeout(function () {
+              if (el.parentNode) el.parentNode.removeChild(el);
+            }, 460);
+          }, Math.max(0, MIN - (performance.now() - start)));
+        }
+        window.__frostSplashDone = hide;
+        setTimeout(hide, 8000);
+      })();
+    </script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

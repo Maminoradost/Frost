@@ -1,0 +1,15 @@
+name: Идея
+description: Предложить улучшение Frost
+title: "[Идея]: "
+labels: [enhancement]
+body:
+ - type: textarea
+   id: idea
+   attributes:
+     label: Что хотелось бы добавить?
+   validations:
+     required: true
+ - type: textarea
+   id: why
+   attributes:
+     label: Какую проблему это решит?

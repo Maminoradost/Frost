@@ -1,0 +1,495 @@
+/*
+ * Frost 0.2: стили для новых элементов.
+ * Знакомство (тур с «прожектором»), карточка Telegram, таймер сна,
+ * переключатель источника текста, кнопки в уведомлениях, заметка о чарте.
+ * Подключается последним, после material.css, и опирается на его токены.
+ */
+
+/* ------------------------------------------------------------------ */
+/* Знакомство                                                          */
+/* ------------------------------------------------------------------ */
+
+.tour {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  animation: tour-fade var(--md-medium) var(--md-easing-decel) both;
+}
+
+/* «Прожектор»: прозрачное окно, всё вокруг затемняет огромная тень */
+.tour__hole {
+  position: fixed;
+  pointer-events: none;
+  box-shadow:
+    0 0 0 200vmax rgb(var(--md-scrim-rgb) / 0.6),
+    0 0 32px 4px rgb(var(--md-primary-rgb) / 0.28);
+  outline: 2px solid rgb(var(--md-primary-rgb) / 0.9);
+  outline-offset: 0;
+  transition:
+    top 560ms cubic-bezier(0.05, 0.7, 0.1, 1),
+    left 560ms cubic-bezier(0.05, 0.7, 0.1, 1),
+    width 560ms cubic-bezier(0.05, 0.7, 0.1, 1),
+    height 560ms cubic-bezier(0.05, 0.7, 0.1, 1),
+    border-radius 560ms cubic-bezier(0.05, 0.7, 0.1, 1),
+    outline-color var(--md-short) var(--md-easing);
+}
+.tour__hole::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  outline: 2px solid var(--md-primary);
+  outline-offset: 0;
+  animation: tour-pulse 2.2s var(--md-easing-decel) 600ms infinite;
+}
+.tour__hole--none {
+  outline-color: transparent;
+  box-shadow: 0 0 0 200vmax rgb(var(--md-scrim-rgb) / 0.66);
+}
+.tour__hole--none::after {
+  display: none;
+}
+
+.tour__card {
+  position: fixed;
+  width: 360px;
+  padding: 20px 20px 16px;
+  border-radius: var(--md-shape-xl);
+  background: rgb(var(--md-surface-container-high-rgb) / 0.97);
+  color: var(--md-on-surface);
+  box-shadow: var(--md-elev-3);
+  animation: tour-card-in 460ms cubic-bezier(0.05, 0.7, 0.1, 1) both;
+}
+.tour__card--center {
+  inset: 0;
+  height: fit-content;
+  margin: auto;
+}
+.tour__card--hero {
+  width: 420px;
+  padding: 28px 28px 20px;
+  text-align: center;
+}
+
+.tour__logo {
+  display: grid;
+  place-items: center;
+  margin: 0 auto 16px;
+  filter: drop-shadow(0 10px 28px rgb(var(--md-primary-rgb) / 0.38));
+  animation: tour-float 3.4s ease-in-out infinite alternate;
+}
+
+.tour__count {
+  margin-bottom: 6px;
+  font: var(--md-label-m);
+  letter-spacing: 0.04em;
+  color: var(--md-primary);
+}
+.tour__title {
+  margin: 0 0 8px;
+  font: var(--md-title-l);
+  font-family: var(--font-display);
+  color: var(--md-on-surface);
+}
+.tour__card--hero .tour__title {
+  font: var(--md-headline-s);
+  font-family: var(--font-display);
+}
+.tour__text {
+  margin: 0;
+  font: var(--md-body-m);
+  color: var(--md-on-surface-variant);
+}
+
+.tour__dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin: 20px 0 14px;
+}
+.tour__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: calc(3px * var(--shape-k, 1));
+  background: var(--md-outline-variant);
+  transition:
+    width var(--md-medium) var(--md-spring),
+    background var(--md-short) var(--md-easing);
+}
+.tour__dot.is-past {
+  background: rgb(var(--md-primary-rgb) / 0.45);
+}
+.tour__dot.is-on {
+  width: 22px;
+  background: var(--md-primary);
+}
+
+.tour__actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.tour__actions > span:empty {
+  display: none;
+}
+.tour__card--hero .tour__actions {
+  justify-content: center;
+  gap: 12px;
+}
+
+.tour__skip {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  height: 28px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: var(--md-shape-full);
+  background: transparent;
+  font: var(--md-label-m);
+  color: var(--md-on-surface-variant);
+  cursor: pointer;
+  transition:
+    background var(--md-short) var(--md-easing),
+    color var(--md-short) var(--md-easing);
+}
+.tour__skip:hover {
+  color: var(--md-on-surface);
+  background: rgb(var(--md-on-surface-rgb) / var(--md-state-hover));
+}
+
+.tour__seeds {
+  justify-content: center;
+  margin: 18px 0 2px;
+}
+
+.tour__tg {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  margin-top: 16px;
+  padding: 10px 14px;
+  border: 0;
+  border-radius: var(--md-shape-l);
+  background: rgb(var(--md-surface-container-highest-rgb) / 0.9);
+  color: var(--md-on-surface);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background var(--md-short) var(--md-easing),
+    border-radius var(--md-medium) var(--md-spring);
+}
+.tour__tg:hover {
+  border-radius: var(--md-shape-xl);
+  background: color-mix(in srgb, var(--md-surface-container-highest) 88%, var(--md-primary));
+}
+.tour__tg > svg {
+  flex: none;
+}
+.tour__tg > svg:last-child {
+  color: var(--md-on-surface-variant);
+}
+.tour__tg > span {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.tour__tg strong {
+  font: var(--md-label-l);
+  font-weight: 600;
+}
+.tour__tg > span > span {
+  font: var(--md-body-s);
+  color: var(--md-on-surface-variant);
+}
+
+@keyframes tour-fade {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes tour-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.97);
+  }
+}
+@keyframes tour-pulse {
+  0% {
+    opacity: 0.8;
+    outline-offset: 0;
+  }
+  70%,
+  100% {
+    opacity: 0;
+    outline-offset: 12px;
+  }
+}
+@keyframes tour-float {
+  from {
+    transform: translateY(-3px);
+  }
+  to {
+    transform: translateY(3px);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Telegram: карточка в боковой панели и баннер в настройках           */
+/* ------------------------------------------------------------------ */
+
+.tg-card {
+  position: relative;
+  margin: 4px 0 8px;
+}
+.tg-card__main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 36px 10px 12px;
+  border: 0;
+  border-radius: var(--md-shape-l);
+  background: rgb(var(--md-surface-container-high-rgb) / 0.7);
+  color: var(--md-on-surface);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background var(--md-short) var(--md-easing),
+    border-radius var(--md-medium) var(--md-spring);
+}
+.tg-card__main:hover {
+  border-radius: var(--md-shape-xl);
+  background: color-mix(in srgb, rgb(var(--md-surface-container-high-rgb) / 0.85) 86%, #2aabee);
+}
+.tg-card__main > svg {
+  flex: none;
+}
+.tg-card__text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.tg-card__title {
+  overflow: hidden;
+  font: var(--md-label-l);
+  font-weight: 600;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.tg-card__sub {
+  overflow: hidden;
+  font: var(--md-body-s);
+  color: var(--md-on-surface-variant);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.tg-card__close {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  opacity: 0;
+  transform: translateY(-50%);
+  transition: opacity var(--md-short) var(--md-easing);
+}
+.tg-card:hover .tg-card__close,
+.tg-card:focus-within .tg-card__close {
+  opacity: 1;
+}
+
+.tg-banner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  margin: 12px 0 8px;
+  padding: 16px 20px;
+  border: 0;
+  border-radius: var(--md-shape-xl);
+  background: linear-gradient(135deg, rgb(42 171 238 / 0.2), rgb(var(--md-primary-rgb) / 0.12));
+  color: var(--md-on-surface);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-radius var(--md-medium) var(--md-spring),
+    background var(--md-short) var(--md-easing);
+}
+.tg-banner:hover {
+  border-radius: var(--md-shape-xxl);
+  background: linear-gradient(135deg, rgb(42 171 238 / 0.28), rgb(var(--md-primary-rgb) / 0.18));
+}
+.tg-banner > svg {
+  flex: none;
+}
+.tg-banner > svg:last-child {
+  color: var(--md-on-surface-variant);
+}
+.tg-banner__text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.tg-banner__title {
+  font: var(--md-title-m);
+}
+.tg-banner__sub {
+  font: var(--md-body-m);
+  color: var(--md-on-surface-variant);
+}
+
+.about__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Таймер сна                                                          */
+/* ------------------------------------------------------------------ */
+
+.sleep-btn {
+  position: relative;
+}
+.sleep-btn__badge {
+  position: absolute;
+  top: 0;
+  right: -3px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: calc(8px * var(--shape-k, 1));
+  background: var(--md-primary);
+  color: var(--md-on-primary);
+  font: var(--md-label-s);
+  font-size: calc(10px * var(--ts, 1));
+  line-height: 16px;
+  text-align: center;
+  pointer-events: none;
+  box-shadow: 0 0 0 2px rgb(var(--md-surface-container-rgb) / 0.9);
+}
+.sleep-menu {
+  min-width: 240px;
+  z-index: 300;
+  transform-origin: bottom center;
+}
+.sleep-menu .menu__label {
+  padding: 8px 12px 6px;
+}
+.menu__gap {
+  display: inline-block;
+  flex: none;
+  width: 16px;
+  height: 16px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Текст песни: переключатель источника и ссылка                       */
+/* ------------------------------------------------------------------ */
+
+.lyrics__sources {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 10px 0;
+}
+/* Затухание сверху начинается под чипами, чтобы они не пропадали */
+.lyrics:has(> .lyrics__sources):not(.lyrics--plain) {
+  -webkit-mask-image: linear-gradient(#000 0 50px, transparent 50px, #000 calc(50px + 10%), #000 88%, transparent);
+  mask-image: linear-gradient(#000 0 50px, transparent 50px, #000 calc(50px + 10%), #000 88%, transparent);
+}
+.lyrics--plain > .lyrics__sources {
+  margin: 0 -4px 8px;
+  padding: 8px 4px;
+  border-radius: var(--md-shape-m);
+  background: rgb(var(--md-surface-container-rgb) / 0.92);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+.chip.chip--sm,
+.chip.chip--sm:not(.chip--on):not(.is-active) {
+  height: 28px;
+  padding: 0 12px;
+  gap: 6px;
+  font: var(--md-label-m);
+}
+.chip.chip--sm.chip--on {
+  border-radius: var(--md-shape-s);
+}
+
+.lyrics__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  margin-left: 8px;
+  font: inherit;
+  color: var(--md-primary);
+  vertical-align: baseline;
+}
+
+/* ------------------------------------------------------------------ */
+/* Уведомления с кнопкой действия                                      */
+/* ------------------------------------------------------------------ */
+
+.toast__text {
+  flex: 1;
+  min-width: 0;
+}
+.toast__action {
+  flex: none;
+  height: 32px;
+  margin: -6px -10px -6px 4px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: var(--md-shape-full);
+  background: transparent;
+  color: var(--md-inverse-primary);
+  font: var(--md-label-l);
+  cursor: pointer;
+  transition: background var(--md-short) var(--md-easing);
+}
+.toast__action:hover {
+  background: color-mix(in srgb, currentColor 12%, transparent);
+}
+.toast--error .toast__action {
+  color: var(--md-on-error-container);
+}
+
+/* ------------------------------------------------------------------ */
+/* Главная: пояснение, когда чарт региона взят из другой страны        */
+/* ------------------------------------------------------------------ */
+
+.chart-note {
+  margin: 0 0 12px;
+  padding: 10px 14px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Меньше движения                                                     */
+/* ------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  .tour,
+  .tour__card,
+  .tour__logo,
+  .tour__hole::after {
+    animation: none;
+  }
+  .tour__hole,
+  .tour__dot,
+  .tour__tg,
+  .tg-card__main,
+  .tg-banner {
+    transition: none;
+  }
+}

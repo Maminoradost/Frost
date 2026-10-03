@@ -1,0 +1,47 @@
+[package]
+name = "frost"
+version = "0.9.1"
+description = "Frost: музыкальный плеер для Windows (SoundCloud + YouTube Music) в стиле Material You"
+authors = ["Frost contributors"]
+license = "GPL-3.0-or-later"
+repository = "https://github.com/Maminoradost/frost"
+homepage = "https://github.com/Maminoradost/frost"
+edition = "2021"
+rust-version = "1.82"
+
+[lib]
+name = "frost_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[features]
+default = ["rustypipe"]
+# YouTube Music через RustyPipe (GPL-3.0). Без неё YouTube работает только через yt-dlp:
+# cargo tauri build -- --no-default-features
+rustypipe = ["dep:rustypipe"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = ["tray-icon", "protocol-asset"] }
+tauri-plugin-opener = "2"
+tauri-plugin-dialog = "2.8"
+tauri-plugin-global-shortcut = "2.4"
+tauri-plugin-autostart = "2.6"
+tauri-plugin-window-state = "2"
+tauri-plugin-single-instance = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+reqwest = { version = "0.12", features = ["json", "socks"] }
+tokio = { version = "1", features = ["sync", "time", "rt", "rt-multi-thread", "macros", "process"] }
+http = "1"
+url = "2"
+base64 = "0.22"
+thiserror = "2"
+rustypipe = { version = "0.11", optional = true }
+
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = "s"
+strip = true

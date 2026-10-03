@@ -1,0 +1,1881 @@
+/* ═════════════════════ Frost × Material You: компоненты ═════════════════════
+ * Подключается последним и переводит интерфейс на язык Material 3 (с элементами
+ * M3 Expressive: морфинг формы кнопки, волнистый прогресс, крупные скругления).
+ * Цвета только из ролей --md-*; прозрачность через --surface-alpha.
+ */
+
+/* ───────── База ───────── */
+body {
+  font: var(--md-body-m);
+  letter-spacing: 0.005em;
+}
+::selection {
+  background: rgb(var(--md-primary-rgb) / 0.32);
+  color: var(--md-on-surface);
+}
+:focus-visible {
+  outline: 3px solid rgb(var(--md-secondary-rgb) / 0.9);
+  outline-offset: 2px;
+}
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--md-on-surface-rgb) / 0.2);
+  border: 3px solid transparent;
+  border-radius: var(--md-shape-full);
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--md-on-surface-rgb) / 0.34);
+  background-clip: padding-box;
+}
+.spacer {
+  flex: 1;
+}
+.muted {
+  color: var(--md-on-surface-variant);
+}
+.eyebrow {
+  font: var(--md-label-m);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--md-primary);
+}
+.link:hover {
+  color: var(--md-primary);
+}
+kbd {
+  font: var(--md-label-m);
+  padding: 3px 8px;
+  border-radius: var(--md-shape-s);
+  background: var(--md-surface-container-highest);
+  color: var(--md-on-surface);
+  border: 0;
+  box-shadow: inset 0 -1px 0 rgb(var(--md-outline-rgb) / 0.35);
+}
+
+/* ───────── Окно и фон ───────── */
+.app::before {
+  background: var(--tint);
+}
+[data-backdrop="none"] .app::before {
+  background: var(--md-surface);
+}
+.ambient__blob {
+  background-color: var(--md-primary);
+}
+.ambient__blob--b {
+  background-color: var(--md-tertiary);
+}
+
+/* ───────── Заголовок и поиск (M3 search bar) ───────── */
+.titlebar {
+  gap: 8px;
+  padding-left: 16px;
+}
+.titlebar__brand {
+  font: var(--md-title-m);
+  color: var(--md-on-surface);
+}
+.search-box {
+  height: 40px;
+  border-radius: var(--md-shape-full);
+  background: var(--surface-3);
+  border: 0;
+  box-shadow: none;
+  color: var(--md-on-surface-variant);
+  transition: background var(--md-short) var(--md-easing), box-shadow var(--md-short) var(--md-easing);
+}
+.search-box:hover {
+  background: color-mix(in srgb, var(--md-surface-container-highest) 90%, var(--md-on-surface));
+  border: 0;
+}
+.search-box:focus-within {
+  background: var(--md-surface-container-highest);
+  box-shadow: var(--md-elev-2), inset 0 0 0 2px var(--md-primary);
+  border: 0;
+}
+.search-box input {
+  font: var(--md-body-l);
+  color: var(--md-on-surface);
+}
+.search-box input::placeholder {
+  color: var(--md-on-surface-variant);
+}
+.search-box__clear {
+  border-radius: var(--md-shape-full);
+}
+.search-box__clear:hover {
+  background: rgb(var(--md-on-surface-rgb) / var(--md-state-hover));
+}
+.wc {
+  color: var(--md-on-surface-variant);
+}
+.wc:hover {
+  background: rgb(var(--md-on-surface-rgb) / var(--md-state-hover));
+  color: var(--md-on-surface);
+}
+.wc--close:hover {
+  background: #c42b1c;
+  color: #fff;
+}
+
+/* ───────── Навигация (M3 navigation drawer) ───────── */
+.sidebar {
+  gap: 4px;
+  padding: 4px 12px calc(var(--player-h) + 28px);
+}
+.sidebar__nav {
+  gap: 4px;
+}
+.nav-item {
+  height: 48px;
+  gap: 12px;
+  padding: 0 16px;
+  border-radius: var(--md-shape-full);
+  font: var(--md-label-l);
+  color: var(--md-on-surface-variant);
+  transition: background var(--md-short) var(--md-easing), color var(--md-short) var(--md-easing);
+}
+.nav-item:hover {
+  background: rgb(var(--md-on-surface-rgb) / var(--md-state-hover));
+  color: var(--md-on-surface);
+}
+.nav-item:active {
+  background: rgb(var(--md-on-surface-rgb) / var(--md-state-pressed));
+}
+.nav-item.is-active {
+  background: var(--md-secondary-container);
+  color: var(--md-on-secondary-container);
+  font-weight: 700;
+}
+.nav-item.is-active::before {
+  display: none;
+}
+.nav-item.is-active:hover {
+  background: color-mix(in srgb, var(--md-secondary-container) 92%, var(--md-on-secondary-container));
+}
+.nav-item__count {
+  font: var(--md-label-m);
+  color: inherit;
+  opacity: 0.8;
+}
+.sidebar__section {
+  font: var(--md-title-s);
+  color: var(--md-on-surface-variant);
+}
+.sidebar__hint {
+  border-radius: var(--md-shape-l);
+  border: 1px dashed rgb(var(--md-outline-rgb) / 0.6);
+  color: var(--md-on-surface-variant);
+}
+.sidebar__hint:hover {
+  background: rgb(var(--md-on-surface-rgb) / var(--md-state-hover));
+  color: var(--md-on-surface);
+}
+.pl-item {
+  border-radius: var(--md-shape-l);
+  transition: background var(--md-short) var(--md-easing);
+}
+.pl-item:hover {
+  background: rgb(var(--md-on-surface-rgb) / var(--md-state-hover));
+}
+.pl-item.is-active {
+  background: var(--md-secondary-container);
+  color: var(--md-on-secondary-container);
+}
+.pl-item.is-active .pl-item__meta {
+  color: rgb(var(--md-on-secondary-container-rgb) / 0.8);
+}
+.pl-item .artwork,
+.pl-item .mosaic,
+.pl-item .liked-art {
+  border-radius: var(--md-shape-m);
+}
+
+/* ───────── Основная область и боковая панель ───────── */
+.main {
+  border: 0;
+  border-radius: var(--md-shape-xl) var(--md-shape-xl) 0 0;
+  background: var(--surface-0);
+  box-shadow: none;
+}
+.main__scroll {
+  padding: 32px 40px calc(var(--player-h) + 48px);
+}
+.side-panel {
+  border: 0;
+  border-radius: var(--md-shape-xl);
+  background: var(--surface-1);
+  box-shadow: none;
+}
+.side-panel__head h3 {
+  font: var(--md-title-l);
+}
+.glass {
+  background: var(--surface-2);
+  border: 0;
+  box-shadow: var(--md-elev-3);
+}
+[data-backdrop="none"] .glass {
+  background: var(--md-surface-container-high);
+}
+
+/* ───────── Плеер (плавающая панель M3) ───────── */
+.player {
+  border-radius: var(--md-shape-xl);
+  padding: 0 20px 0 12px;
+  gap: 20px;
+}
+.player__art {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--md-shape-l);
+  overflow: hidden;
+}
+.player__art .artwork {
+  border-radius: var(--md-shape-l);
+}
+.player__title {
+  font: var(--md-title-s);
+  font-size: calc(15px * var(--ts, 1));
+}
+.player__artist {
+  font: var(--md-body-m);
+  color: var(--md-on-surface-variant);
+}
+.player__source {
+  border-radius: var(--md-shape-full);
+}
+.player__source:hover {
+  background: rgb(var(--md-on-surface-rgb) / var(--md-state-hover));
+}
+
+/* Кнопка «Играть»: морфинг формы (M3 Expressive): пауза = круг, играет = скруглённый квадрат */
+.play-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: calc(24px * var(--shape-k, 1));
+  background: var(--md-primary);
+  color: var(--md-on-primary);
+  box-shadow: none;
+  transition:
+    border-radius var(--md-medium) var(--md-spring),
+    transform var(--md-short) var(--md-easing),
+    background var(--md-short) var(--md-easing),
+    box-shadow var(--md-short) var(--md-easing);
+}
+.play-btn.is-playing {
+  border-radius: var(--md-shape-l);
+}
+.play-btn:hover {
+  transform: none;
+  background: color-mix(in srgb, var(--md-primary) 90%, var(--md-on-primary));
+  box-shadow: var(--md-elev-1);
+}
+.play-btn:active {
+  transform: scale(0.94);
+  border-radius: var(--md-shape-m);
+}
+.play-btn:disabled {
+  background: rgb(var(--md-on-surface-rgb) / 0.12);
+  color: rgb(var(--md-on-surface-rgb) / 0.38);
+  box-shadow: none;
+}
+.controls {
+  gap: 8px;
+}
+.controls--large {
+  gap: 20px;
+}
+.controls--large .play-btn {
+  width: 80px;
+  height: 80px;
+  border-radius: calc(40px * var(--shape-k, 1));
+  background: var(--md-primary);
+  color: var(--md-on-primary);
+  box-shadow: var(--md-elev-2);
+}
+.controls--large .play-btn.is-playing {
+  border-radius: var(--md-shape-xl);
+}
+
+.seek__time {
+  font: var(--md-label-m);
+  font-variant-numeric: tabular-nums;
+  color: var(--md-on-surface-variant);
+}
+
+/* ───────── Слайдеры (M3, 2024: толстая дорожка + вертикальная ручка) ───────── */
+.slider {
+  height: 24px;
+}
+.slider__rail {
+  height: 6px;
+  background: var(--md-secondary-container);
+  overflow: hidden;
+}
+.slider:hover .slider__rail,
+.slider.is-dragging .slider__rail {
+  height: 6px;
+}
+.slider__buffered {
+  background: rgb(var(--md-primary-rgb) / 0.22);
+  border-radius: var(--md-shape-full);
+}
+.slider__fill,
+.slider:hover .slider__fill,
+.slider.is-dragging .slider__fill {
+  background: var(--md-primary);
+}
+.slider__thumb {
+  width: 4px;
+  height: 20px;
+  margin: -10px 0 0 -2px;
+  border-radius: calc(2px * var(--shape-k, 1));
+  background: var(--md-primary);
+  box-shadow: none;
+  transform: scaleY(0.7);
+  opacity: 0;
+  transition:
+    transform var(--md-short) var(--md-easing),
+    opacity var(--md-short) var(--md-easing),
+    width var(--md-short) var(--md-easing),
+    margin var(--md-short) var(--md-easing);
+}
+.slider:hover .slider__thumb,
+.slider:focus-visible .slider__thumb,
+.slider.is-dragging .slider__thumb {
+  transform: none;
+  opacity: 1;
+}
+.slider.is-dragging .slider__thumb {
+  width: 2px;
+  margin-left: -1px;
+}
+
+/* Волнистый прогресс трека (M3 Expressive), пока музыка играет */
+.seek__slider .slider__rail {
+  height: 12px;
+  background: transparent;
+  border-radius: 0;
+}
+.seek__slider:hover .slider__rail,
+.seek__slider.is-dragging .slider__rail {
+  height: 12px;
+}
+.seek__slider .slider__rail::before {
+  content: "";
+  position: absolute;
+  inset: 50% 0 auto 0;
+  height: 4px;
+  margin-top: -2px;
+  border-radius: var(--md-shape-full);
+  background: var(--md-secondary-container);
+}
+.seek__slider .slider__buffered,
+.seek__slider .slider__fill {
+  inset: 50% auto auto 0;
+  height: 4px;
+  margin-top: -2px;
+  border-radius: var(--md-shape-full);
+}
+.player.is-playing .seek__slider:not(.is-dragging) .slider__fill,
+.np.is-playing .seek__slider:not(.is-dragging) .slider__fill {
+  height: 12px;
+  margin-top: -6px;
+  border-radius: 0;
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='28' height='12' viewBox='0 0 28 12'><path d='M0 6 Q7 0.8 14 6 T28 6' fill='none' stroke='black' stroke-width='3.4' stroke-linecap='round'/></svg>")
+    0 50% / 28px 12px repeat-x;
+  mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='28' height='12' viewBox='0 0 28 12'><path d='M0 6 Q7 0.8 14 6 T28 6' fill='none' stroke='black' stroke-width='3.4' stroke-linecap='round'/></svg>")
+    0 50% / 28px 12px repeat-x;
+  animation: md-wave 1.4s linear infinite;
+}
+@keyframes md-wave {
+  to {
+    -webkit-mask-position: 28px 50%;
+    mask-position: 28px 50%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .player.is-playing .seek__slider .slider__fill,
+  .np.is-playing .seek__slider .slider__fill {
+    animation: none;
+  }
+}
+
+/* ═════════════════════ Кнопки ═════════════════════ */
+.icon-btn {
+  width: 40px;
+  height: 40px;
+  color: var(--md-on-surface-variant);
+  transition:
+    background var(--md-short) var(--md-easing),
+    color var(--md-short) var(--md-easing),
+    border-radius var(--md-medium) var(--md-spring),
+    transform var(--md-short) var(--md-easing);
+}
+.icon-btn:hover {
+  background: rgb(var(--md-on-surface-variant-rgb) / var(--md-state-hover));
+  color: var(--md-on-surface);
+}
+.icon-btn:active {
+  transform: none;
+  background: rgb(var(--md-on-surface-variant-rgb) / var(--md-state-pressed));
+  border-radius: var(--md-shape-m);
+}
+.icon-btn:disabled {
+  color: rgb(var(--md-on-surface-rgb) / 0.38);
+  background: transparent;
+}
+.icon-btn--sm {
+  width: 32px;
+  height: 32px;
+}
+.icon-btn--xs {
+  width: 28px;
+  height: 28px;
+}
+/* Переключаемая иконка (M3 toggle icon button): включено = тональный контейнер */
+.icon-btn.is-on {
+  color: var(--md-on-secondary-container);
+  background: var(--md-secondary-container);
+  border-radius: var(--md-shape-m);
+}
+.icon-btn.is-on:hover {
+  background: color-mix(in srgb, var(--md-secondary-container) 90%, var(--md-on-secondary-container));
+}
+.icon-btn.is-on::after {
+  display: none;
+}
+.like.is-liked,
+.track-row .like.is-liked {
+  color: var(--md-primary);
+}
+
+.btn {
+  height: 40px;
+  padding: 0 24px;
+  gap: 8px;
+  border: 0;
+  border-radius: var(--md-shape-full);
+  font: var(--md-label-l);
+  letter-spacing: 0.01em;
+  color: var(--md-primary);
+  background: transparent;
+  box-shadow: none;
+  transition:
+    background var(--md-short) var(--md-easing),
+    box-shadow var(--md-short) var(--md-easing),
+    color var(--md-short) var(--md-easing),
+    border-radius var(--md-medium) var(--md-spring);
+}
+.btn:active {
+  transform: none;
+  border-radius: var(--md-shape-m);
+}
+.btn:disabled {
+  color: rgb(var(--md-on-surface-rgb) / 0.38);
+  background: rgb(var(--md-on-surface-rgb) / 0.12);
+  box-shadow: none;
+  border-color: transparent;
+}
+.btn--sm {
+  height: 32px;
+  padding: 0 16px;
+  font: var(--md-label-m);
+  font-size: calc(12.5px * var(--ts, 1));
+}
+.btn--lg {
+  height: 56px;
+  padding: 0 28px;
+  font: var(--md-title-m);
+}
+/* Filled */
+.btn--filled,
+.btn--primary {
+  background: var(--md-primary);
+  color: var(--md-on-primary);
+  box-shadow: none;
+  filter: none;
+}
+.btn--filled:hover,
+.btn--primary:hover {
+  background: color-mix(in srgb, var(--md-primary) 90%, var(--md-on-primary));
+  box-shadow: var(--md-elev-1);
+  filter: none;
+}
+/* Tonal */
+.btn--tonal {
+  background: var(--md-secondary-container);
+  color: var(--md-on-secondary-container);
+}
+.btn--tonal:hover {
+  background: color-mix(in srgb, var(--md-secondary-container) 90%, var(--md-on-secondary-container));
+  box-shadow: var(--md-elev-1);
+}
+/* Outlined */
+.btn--outlined {
+  border: 1px solid var(--md-outline-variant);
+  color: var(--md-on-surface-variant);
+  padding: 0 23px;
+}
+.btn--outlined:hover {
+  background: rgb(var(--md-on-surface-variant-rgb) / var(--md-state-hover));
+}
+.btn--outlined.btn--sm {
+  padding: 0 15px;
+}
+/* Text и «ghost» из v0.1 */
+.btn--text {
+  padding: 0 12px;
+  color: var(--md-primary);
+}
+.btn--text:hover {
+  background: rgb(var(--md-primary-rgb) / var(--md-state-hover));
+}
+.btn--ghost {
+  background: var(--md-surface-container-highest);
+  border: 0;
+  color: var(--md-on-surface);
+}
+.btn--ghost:hover {
+  background: color-mix(in srgb, var(--md-surface-container-highest) 90%, var(--md-on-surface));
+}
+.btn--ghost.is-on {
+  background: var(--md-secondary-container);
+  color: var(--md-on-secondary-container);
+  border-color: transparent;
+}
+.btn--danger {
+  background: var(--md-error);
+  color: var(--md-on-error);
+}
+.btn--danger:hover {
+  background: color-mix(in srgb, var(--md-error) 90%, var(--md-on-error));
+}
+
+/* ═════════════════════ Метки, чипы, сегменты, вкладки ═════════════════════ */
+.tag {
+  height: 20px;
+  padding: 0 8px;
+  border-radius: var(--md-shape-s);
+  font: var(--md-label-s);
+  letter-spacing: 0.02em;
+  color: var(--md-on-surface-variant);
+  background: var(--md-surface-container-highest);
+}
+.tag--primary {
+  color: var(--md-on-primary-container);
+  background: var(--md-primary-container);
+}
+.tag--via {
+  color: var(--md-on-tertiary-container);
+  background: var(--md-tertiary-container);
+  gap: 4px;
+}
+.tag--warn {
+  color: var(--md-on-error-container);
+  background: var(--md-error-container);
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.chip-row__icon {
+  color: var(--md-on-surface-variant);
+  margin-right: 2px;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+  padding: 0 16px;
+  border-radius: var(--md-shape-s);
+  border: 1px solid var(--md-outline-variant);
+  background: transparent;
+  color: var(--md-on-surface-variant);
+  font: var(--md-label-l);
+  transition:
+    background var(--md-short) var(--md-easing),
+    color var(--md-short) var(--md-easing),
+    border-color var(--md-short) var(--md-easing),
+    border-radius var(--md-medium) var(--md-spring);
+}
+.chip:hover {
+  color: var(--md-on-surface);
+  background: rgb(var(--md-on-surface-variant-rgb) / var(--md-state-hover));
+}
+.chip.is-active,
+.chip--on {
+  padding-left: 10px;
+  color: var(--md-on-secondary-container);
+  background: var(--md-secondary-container);
+  border-color: transparent;
+  border-radius: var(--md-shape-m);
+}
+.chip.is-active:hover,
+.chip--on:hover {
+  background: color-mix(in srgb, var(--md-secondary-container) 90%, var(--md-on-secondary-container));
+}
+.chip:not(.chip--on):not(.is-active) {
+  padding-left: 16px;
+}
+
+/* M3 segmented buttons */
+.segmented {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0;
+  padding: 0;
+  border-radius: var(--md-shape-full);
+  border: 1px solid var(--md-outline);
+  background: transparent;
+  overflow: hidden;
+}
+.segmented button,
+.segmented__item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 40px;
+  min-width: 48px;
+  padding: 0 16px;
+  border-radius: 0;
+  border: 0;
+  border-left: 1px solid var(--md-outline);
+  background: transparent;
+  color: var(--md-on-surface);
+  font: var(--md-label-l);
+  transition: background var(--md-short) var(--md-easing), color var(--md-short) var(--md-easing);
+}
+.segmented button:first-child,
+.segmented__item:first-child {
+  border-left: 0;
+}
+.segmented button:hover,
+.segmented__item:hover {
+  color: var(--md-on-surface);
+  background: rgb(var(--md-on-surface-rgb) / var(--md-state-hover));
+}
+.segmented button.is-active,
+.segmented__item--on {
+  background: var(--md-secondary-container);
+  color: var(--md-on-secondary-container);
+}
+.segmented button.is-active:hover,
+.segmented__item--on:hover {
+  background: color-mix(in srgb, var(--md-secondary-container) 90%, var(--md-on-secondary-container));
+}
+.segmented__check {
+  margin-left: -4px;
+  animation: md-pop var(--md-medium) var(--md-spring);
+}
+.segmented--small button,
+.segmented--small .segmented__item {
+  height: 32px;
+  padding: 0 12px;
+  font: var(--md-label-m);
+}
+@keyframes md-pop {
+  from {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+}
+
+/* M3 primary tabs */
+.tabs {
+  border-bottom: 1px solid var(--md-surface-container-highest);
+  gap: 4px;
+}
+.tab {
+  height: 48px;
+  padding: 0 16px;
+  color: var(--md-on-surface-variant);
+  font: var(--md-title-s);
+  border-radius: var(--md-shape-m) var(--md-shape-m) 0 0;
+  transition: background var(--md-short) var(--md-easing), color var(--md-short) var(--md-easing);
+}
+.tab:hover {
+  color: var(--md-on-surface);
+  background: rgb(var(--md-on-surface-rgb) / var(--md-state-hover));
+}
+.tab.is-active,
+.tab--on {
+  color: var(--md-primary);
+}
+.tab.is-active::after,
+.tab--on::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 0;
+  height: 3px;
+  border-radius: calc(3px * var(--shape-k, 1)) calc(3px * var(--shape-k, 1)) 0 0;
+  background: var(--md-primary);
+}
+
+/* ═════════════════════ Поля ввода, списки выбора ═════════════════════ */
+.input,
+.select {
+  width: 100%;
+  height: 48px;
+  padding: 0 16px;
+  border-radius: var(--md-shape-m);
+  border: 1px solid var(--md-outline);
+  background: transparent;
+  color: var(--md-on-surface);
+  font: var(--md-body-l);
+  transition: border-color var(--md-short) var(--md-easing), box-shadow var(--md-short) var(--md-easing);
+}
+.input:hover,
+.select:hover {
+  border-color: var(--md-on-surface);
+}
+.input:focus,
+.select:focus {
+  outline: none;
+  border-color: var(--md-primary);
+  box-shadow: inset 0 0 0 1px var(--md-primary);
+}
+.input::placeholder {
+  color: var(--md-on-surface-variant);
+  opacity: 0.8;
+}
+.input--error,
+.input--error:focus {
+  border-color: var(--md-error);
+  box-shadow: inset 0 0 0 1px var(--md-error);
+}
+.select {
+  width: auto;
+  min-width: 200px;
+  height: 44px;
+  padding: 0 40px 0 16px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--surface-2)
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><path d='M7 10l5 5 5-5z' fill='%23888'/></svg>")
+    no-repeat right 10px center;
+  border-color: transparent;
+  cursor: default;
+}
+.select option {
+  background: var(--md-surface-container-high);
+  color: var(--md-on-surface);
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.field > span:first-child {
+  font: var(--md-label-m);
+  color: var(--md-on-surface-variant);
+  padding-left: 4px;
+}
+
+/* M3 switch: дорожка 52×32, ручка растёт при включении и нажатии */
+.switch {
+  width: 52px;
+  height: 32px;
+  border-radius: var(--md-shape-full);
+  border: 2px solid var(--md-outline);
+  background: var(--md-surface-container-highest);
+  transition: background var(--md-short) var(--md-easing), border-color var(--md-short) var(--md-easing);
+}
+.switch__knob {
+  top: 50%;
+  left: 6px;
+  width: 16px;
+  height: 16px;
+  margin-top: -8px;
+  background: var(--md-outline);
+  transition:
+    transform var(--md-medium) var(--md-spring),
+    width var(--md-short) var(--md-easing),
+    height var(--md-short) var(--md-easing),
+    margin var(--md-short) var(--md-easing),
+    background var(--md-short) var(--md-easing),
+    left var(--md-short) var(--md-easing);
+}
+.switch:hover .switch__knob {
+  background: var(--md-on-surface-variant);
+}
+.switch:active .switch__knob {
+  width: 28px;
+  height: 28px;
+  margin-top: -14px;
+  left: 0;
+}
+.switch.is-on {
+  background: var(--md-primary);
+  border-color: var(--md-primary);
+}
+.switch.is-on .switch__knob {
+  width: 24px;
+  height: 24px;
+  margin-top: -12px;
+  left: 2px;
+  transform: translateX(20px);
+  background: var(--md-on-primary);
+}
+.switch.is-on:hover .switch__knob {
+  background: var(--md-primary-container);
+}
+.switch.is-on:active .switch__knob {
+  width: 28px;
+  height: 28px;
+  margin-top: -14px;
+  left: 0;
+}
+.switch:disabled {
+  opacity: 0.38;
+}
+
+/* Нативные ползунки (плотность панелей, эквалайзер) */
+.range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 200px;
+  height: 24px;
+  background: transparent;
+}
+.range::-webkit-slider-runnable-track {
+  height: 8px;
+  border-radius: var(--md-shape-full);
+  background: linear-gradient(to right, var(--md-primary) var(--fill, 50%), var(--md-secondary-container) var(--fill, 50%));
+}
+.range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 4px;
+  height: 24px;
+  margin-top: -8px;
+  border-radius: calc(2px * var(--shape-k, 1));
+  background: var(--md-primary);
+  transition: width var(--md-short) var(--md-easing);
+}
+.range:active::-webkit-slider-thumb {
+  width: 2px;
+}
+.range:disabled {
+  opacity: 0.38;
+}
+.range-field {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.range-field__value {
+  min-width: 40px;
+  font: var(--md-label-l);
+  font-variant-numeric: tabular-nums;
+  color: var(--md-on-surface-variant);
+  text-align: right;
+}
+.eq__slider {
+  width: 8px;
+  background: linear-gradient(to top, var(--md-primary) var(--fill, 50%), var(--md-secondary-container) var(--fill, 50%));
+}
+.eq__slider::-webkit-slider-thumb {
+  width: 24px;
+  height: 4px;
+  border-radius: calc(2px * var(--shape-k, 1));
+  background: var(--md-primary);
+  box-shadow: none;
+}
+
+/* ═════════════════════ Карточки и плитки ═════════════════════ */
+.card {
+  gap: 2px;
+  padding: 10px 10px 14px;
+  border-radius: var(--md-shape-lx);
+  transition: background var(--md-short) var(--md-easing);
+}
+.card:hover {
+  background: rgb(var(--md-on-surface-rgb) / 0.06);
+}
+.card__img,
+.card__art > .artwork,
+.card__art > .mosaic {
+  border-radius: var(--md-shape-l);
+  box-shadow: none;
+  transition: border-radius var(--md-medium) var(--md-spring);
+}
+.card:hover .card__img,
+.card:hover .card__art > .artwork,
+.card:hover .card__art > .mosaic {
+  border-radius: var(--md-shape-xl);
+}
+.card--round .card__img,
+.card--round:hover .card__img {
+  border-radius: 50%;
+}
+.card__title {
+  font: var(--md-title-s);
+}
+.card__subtitle {
+  font: var(--md-body-s);
+  color: var(--md-on-surface-variant);
+}
+/* Кнопка на карточке = маленький FAB */
+.card__play {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--md-shape-l);
+  background: var(--md-primary-container);
+  color: var(--md-on-primary-container);
+  box-shadow: var(--md-elev-3);
+  transition:
+    opacity var(--md-short) var(--md-easing),
+    transform var(--md-medium) var(--md-spring),
+    border-radius var(--md-medium) var(--md-spring);
+}
+.card__play:hover {
+  border-radius: calc(24px * var(--shape-k, 1));
+}
+
+.quick-grid {
+  gap: 8px;
+}
+.quick-tile {
+  height: 64px;
+  padding: 8px;
+  gap: 12px;
+  border: 0;
+  border-radius: var(--md-shape-l);
+  background: var(--surface-2);
+  transition: background var(--md-short) var(--md-easing), border-radius var(--md-medium) var(--md-spring);
+}
+.quick-tile:hover {
+  background: color-mix(in srgb, var(--md-surface-container-highest) 88%, var(--md-on-surface));
+  border-radius: var(--md-shape-lx);
+}
+.quick-tile__art,
+.quick-tile .artwork {
+  border-radius: var(--md-shape-m);
+}
+
+/* Жанры: тональные карточки M3 вместо градиентов. Цвет жанра задаёт --tile */
+.genre-grid {
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+}
+.genre-grid--large {
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+}
+.genre-tile,
+.genre-grid--large .genre-tile {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  height: 72px;
+  padding: 0 16px 0 14px;
+  border-radius: var(--md-shape-l);
+  overflow: hidden;
+  font: inherit;
+  color: var(--md-on-surface);
+  background: color-mix(in srgb, var(--tile, var(--md-primary)) 14%, rgb(var(--md-surface-container-high-rgb) / var(--surface-alpha)));
+  box-shadow: none;
+  filter: none;
+  text-align: left;
+  transition:
+    background var(--md-short) var(--md-easing),
+    border-radius var(--md-medium) var(--md-spring),
+    transform var(--md-medium) var(--md-spring);
+}
+.genre-tile::after {
+  display: none;
+}
+.genre-tile:hover {
+  transform: none;
+  filter: none;
+  border-radius: var(--md-shape-xl);
+  background: color-mix(in srgb, var(--tile, var(--md-primary)) 24%, rgb(var(--md-surface-container-high-rgb) / var(--surface-alpha)));
+}
+.genre-tile:active {
+  transform: scale(0.98);
+}
+.genre-tile span {
+  text-shadow: none;
+}
+.genre-tile__icon {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: var(--md-shape-m);
+  color: color-mix(in srgb, var(--tile, var(--md-primary)) 75%, var(--md-on-surface));
+  background: color-mix(in srgb, var(--tile, var(--md-primary)) 26%, transparent);
+  transition: border-radius var(--md-medium) var(--md-spring);
+}
+.genre-tile:hover .genre-tile__icon {
+  border-radius: calc(22px * var(--shape-k, 1));
+}
+.genre-tile__dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--tile, var(--md-primary));
+}
+.genre-tile__text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+.genre-tile__label {
+  font: var(--md-title-s);
+  font-size: calc(15px * var(--ts, 1));
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.genre-tile__sub {
+  font: var(--md-body-s);
+  color: var(--md-on-surface-variant);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ═════════════════════ Списки треков ═════════════════════ */
+.track-list__head {
+  font: var(--md-label-m);
+  color: var(--md-on-surface-variant);
+  border-bottom-color: var(--md-surface-container-highest);
+}
+.track-row {
+  height: 60px;
+  border-radius: var(--md-shape-l);
+  transition: background var(--md-short) var(--md-easing);
+}
+.track-row:hover {
+  background: rgb(var(--md-on-surface-rgb) / 0.06);
+}
+.track-row.is-active {
+  background: rgb(var(--md-secondary-container-rgb) / calc(0.35 + var(--surface-alpha) * 0.4));
+}
+.track-row.is-active .track-row__title {
+  color: var(--md-primary);
+}
+.track-row__title {
+  font: var(--md-title-s);
+  font-weight: 600;
+}
+.track-row__artist,
+.track-row__album,
+.track-row__duration,
+.track-row__plays {
+  color: var(--md-on-surface-variant);
+}
+.track-row .artwork {
+  border-radius: var(--md-shape-m);
+}
+.eq-bars span {
+  background: var(--md-primary);
+}
+
+/* ═════════════════════ Разделы ═════════════════════ */
+.section__title {
+  font: var(--md-title-l);
+  letter-spacing: 0;
+}
+.section__subtitle {
+  font: var(--md-body-m);
+  color: var(--md-on-surface-variant);
+}
+.page-title {
+  font: var(--md-headline-l);
+  letter-spacing: -0.01em;
+}
+.page-subtitle {
+  margin-top: 4px;
+  font: var(--md-body-l);
+  color: var(--md-on-surface-variant);
+}
+.page-head {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  margin-bottom: 24px;
+}
+.subsection {
+  margin-top: 20px;
+}
+.subsection__title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  font: var(--md-title-m);
+  color: var(--md-on-surface-variant);
+}
+
+/* ═════════════════════ Меню, диалоги, снекбары ═════════════════════ */
+.menu {
+  min-width: 240px;
+  padding: 8px;
+  border: 0;
+  border-radius: var(--md-shape-l);
+  background: rgb(var(--md-surface-container-rgb) / max(0.94, var(--surface-alpha)));
+  box-shadow: var(--md-elev-2);
+  backdrop-filter: var(--blur-glass);
+}
+.menu__item {
+  height: 44px;
+  padding: 0 12px;
+  gap: 12px;
+  border-radius: var(--md-shape-m);
+  font: var(--md-label-l);
+  font-weight: 500;
+  color: var(--md-on-surface);
+}
+.menu__item svg {
+  color: var(--md-on-surface-variant);
+}
+.menu__item:hover,
+.menu__item:focus-visible {
+  background: rgb(var(--md-on-surface-rgb) / var(--md-state-hover));
+}
+.menu__item--danger,
+.menu__item--danger svg {
+  color: var(--md-error);
+}
+.menu__sep {
+  margin: 6px 4px;
+  background: var(--md-outline-variant);
+  opacity: 0.6;
+}
+.menu__label {
+  font: var(--md-label-m);
+  color: var(--md-on-surface-variant);
+}
+
+.toast {
+  min-height: 48px;
+  padding: 12px 20px;
+  gap: 12px;
+  border: 0;
+  border-radius: var(--md-shape-m);
+  font: var(--md-body-m);
+  color: var(--md-inverse-on-surface);
+  background: var(--md-inverse-surface);
+  box-shadow: var(--md-elev-3);
+  backdrop-filter: none;
+}
+.toast--error {
+  color: var(--md-on-error-container);
+  background: var(--md-error-container);
+}
+.toast--success {
+  color: var(--md-inverse-on-surface);
+  background: var(--md-inverse-surface);
+}
+.toast--success svg {
+  color: var(--md-inverse-primary);
+}
+
+.modal-backdrop,
+.overlay-backdrop {
+  background: var(--scrim);
+}
+.modal {
+  padding: 24px;
+  border: 0;
+  border-radius: var(--md-shape-xl);
+  background: rgb(var(--md-surface-container-high-rgb) / max(0.96, var(--surface-alpha)));
+  box-shadow: var(--md-elev-3);
+}
+.modal__title {
+  font: var(--md-headline-s);
+}
+.modal__text {
+  font: var(--md-body-m);
+  color: var(--md-on-surface-variant);
+}
+.modal__actions {
+  gap: 8px;
+}
+
+/* ═════════════════════ Состояния и подсказки ═════════════════════ */
+.notice,
+.soft-warning,
+.search-hint,
+.did-you-mean {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 20px;
+  padding: 14px 18px;
+  border: 0;
+  border-radius: var(--md-shape-l);
+  font: var(--md-body-m);
+  color: var(--md-on-secondary-container);
+  background: rgb(var(--md-secondary-container-rgb) / calc(0.4 + var(--surface-alpha) * 0.5));
+}
+.notice__icon,
+.search-hint svg {
+  color: var(--md-primary);
+}
+.soft-warning {
+  color: var(--md-on-tertiary-container);
+  background: rgb(var(--md-tertiary-container-rgb) / calc(0.4 + var(--surface-alpha) * 0.5));
+}
+.did-you-mean {
+  padding: 10px 18px;
+  background: transparent;
+  color: var(--md-on-surface-variant);
+}
+.did-you-mean .link {
+  font-weight: 700;
+  color: var(--md-primary);
+}
+.empty-state__icon,
+.error-state__icon {
+  width: 72px;
+  height: 72px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--md-shape-xl);
+  color: var(--md-on-secondary-container);
+  background: var(--md-secondary-container);
+}
+.error-state__icon {
+  color: var(--md-on-error-container);
+  background: var(--md-error-container);
+}
+.empty-state__title,
+.error-state__title {
+  font: var(--md-title-l);
+}
+.empty-state__text,
+.error-state__text {
+  color: var(--md-on-surface-variant);
+}
+.spinner {
+  color: var(--md-primary);
+}
+.provider-badge {
+  border-radius: var(--md-shape-s);
+}
+.verified {
+  color: var(--md-primary);
+}
+
+/* ═════════════════════ Страницы ═════════════════════ */
+/* Главная: приветствие в стиле M3 display */
+.home-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  margin: 4px 0 28px;
+}
+.home-head__title {
+  font: var(--md-display-s);
+  letter-spacing: -0.015em;
+  background: linear-gradient(100deg, var(--md-on-surface) 30%, var(--md-primary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.home-head__sub {
+  margin-top: 6px;
+  font: var(--md-body-l);
+  color: var(--md-on-surface-variant);
+}
+
+/* Герой жанра: большой тональный контейнер с формой-«каплей» */
+.page-hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 28px;
+  padding: 32px 36px;
+  border-radius: var(--md-shape-xxl);
+  overflow: hidden;
+  color: var(--md-on-primary-container);
+  background: rgb(var(--md-primary-container-rgb) / calc(0.45 + var(--surface-alpha) * 0.5));
+  isolation: isolate;
+}
+.page-hero::before,
+.page-hero::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  border-radius: 42% 58% 63% 37% / 41% 44% 56% 59%;
+  background: rgb(var(--md-tertiary-rgb) / 0.22);
+}
+.page-hero::before {
+  width: 280px;
+  height: 280px;
+  right: -60px;
+  top: -110px;
+  animation: md-blob 18s linear infinite;
+}
+.page-hero::after {
+  width: 180px;
+  height: 180px;
+  right: 180px;
+  bottom: -120px;
+  background: rgb(var(--md-primary-rgb) / 0.2);
+  animation: md-blob 24s linear infinite reverse;
+}
+@keyframes md-blob {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.page-hero .eyebrow {
+  color: var(--md-on-primary-container);
+  opacity: 0.85;
+}
+.page-hero__title {
+  font: var(--md-headline-l);
+  font-size: clamp(32px, 4vw, 48px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+.page-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+/* Герой артиста: фото-обложка со скримом */
+.artist-hero {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  gap: 28px;
+  min-height: 300px;
+  margin: -8px 0 28px;
+  padding: 36px;
+  border-radius: var(--md-shape-xxl);
+  overflow: hidden;
+  background: rgb(var(--md-secondary-container-rgb) / calc(0.4 + var(--surface-alpha) * 0.5)) center 30% / cover no-repeat;
+  isolation: isolate;
+}
+.artist-hero__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(to top, rgb(var(--md-surface-rgb) / 0.92), rgb(var(--md-surface-rgb) / 0.35) 60%, transparent);
+}
+.artist-hero .artwork {
+  flex-shrink: 0;
+  box-shadow: var(--md-elev-3);
+}
+.artist-hero__info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+.artist-hero__name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font: var(--md-headline-l);
+  font-size: clamp(34px, 4.6vw, 60px);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  overflow-wrap: anywhere;
+}
+.artist-hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  font: var(--md-body-l);
+  color: var(--md-on-surface-variant);
+}
+
+/* Плейлисты и альбомы */
+.collection-art {
+  border-radius: var(--md-shape-xl);
+  box-shadow: var(--md-elev-3);
+}
+.collection-header__title {
+  font: var(--md-headline-l);
+  font-size: clamp(30px, 4.2vw, 54px);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+}
+.collection-header__desc,
+.collection-header__meta {
+  color: var(--md-on-surface-variant);
+}
+
+/* Поиск: лучший результат + треки */
+.search-top {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.8fr) minmax(0, 1.6fr);
+  gap: 28px;
+  margin-bottom: 32px;
+}
+.search-top:not(:has(.top-result)) {
+  grid-template-columns: minmax(0, 1fr);
+}
+.top-result {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.top-result__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 20px;
+  border-radius: var(--md-shape-xl);
+  background: var(--surface-2);
+  text-align: left;
+  transition: background var(--md-short) var(--md-easing), border-radius var(--md-medium) var(--md-spring);
+}
+.top-result__card:hover {
+  background: color-mix(in srgb, var(--md-surface-container-highest) 88%, var(--md-on-surface));
+  border-radius: var(--md-shape-xxl);
+}
+.top-result__art {
+  width: 112px;
+  height: 112px;
+  margin-bottom: 10px;
+  object-fit: cover;
+  border-radius: var(--md-shape-l);
+  box-shadow: var(--md-elev-2);
+  background: var(--md-surface-container-highest);
+}
+.top-result__title {
+  max-width: 100%;
+  font: var(--md-headline-s);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.top-result__meta {
+  font: var(--md-body-m);
+  color: var(--md-on-surface-variant);
+}
+.search-top__tracks .track-list__head {
+  display: none;
+}
+@media (max-width: 1100px) {
+  .search-top {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* «Сейчас играет» */
+.np__art {
+  border-radius: var(--md-shape-xxl);
+  box-shadow: var(--md-elev-4), 0 0 120px rgb(var(--md-primary-rgb) / 0.28);
+}
+.np__title {
+  font: var(--md-headline-m);
+}
+.np__artist {
+  font: var(--md-body-l);
+  color: var(--md-on-surface-variant);
+}
+
+/* Очередь и тексты */
+.queue-item {
+  border-radius: var(--md-shape-m);
+}
+.queue-item:hover {
+  background: rgb(var(--md-on-surface-rgb) / 0.06);
+}
+.queue-item.is-active {
+  background: rgb(var(--md-secondary-container-rgb) / 0.6);
+}
+.queue-item.is-active .queue-item__title {
+  color: var(--md-primary);
+}
+.lyrics__line {
+  border-radius: var(--md-shape-m);
+}
+.lyrics__line.is-active {
+  color: var(--md-primary);
+}
+
+/* ═════════════════════ Настройки ═════════════════════ */
+.page--settings {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.settings-group {
+  padding: 20px 20px 16px;
+  border-radius: var(--md-shape-xl);
+  background: var(--surface-1);
+}
+.settings-group__head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 12px;
+  padding: 0 4px;
+}
+.settings-group__icon {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: var(--md-shape-m);
+  color: var(--md-on-primary-container);
+  background: var(--md-primary-container);
+}
+.settings-group__title {
+  font: var(--md-title-l);
+}
+.settings-group__subtitle {
+  font: var(--md-body-m);
+  color: var(--md-on-surface-variant);
+}
+.settings-group__body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.setting-row {
+  min-height: 64px;
+  padding: 10px 8px 10px 12px;
+  border-radius: var(--md-shape-l);
+  border: 0;
+  background: transparent;
+  transition: background var(--md-short) var(--md-easing);
+}
+label.setting-row:hover {
+  background: rgb(var(--md-on-surface-rgb) / 0.05);
+}
+.setting-row--stacked {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+}
+.setting-row__label {
+  font: var(--md-body-l);
+  font-weight: 500;
+  color: var(--md-on-surface);
+}
+.setting-row__desc {
+  font: var(--md-body-m);
+  color: var(--md-on-surface-variant);
+}
+.settings-save {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 8px 4px 4px;
+}
+
+/* Карточки источников */
+.sources {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.source-card {
+  padding: 14px 14px 14px 18px;
+  border: 0;
+  border-radius: var(--md-shape-lx);
+  background: var(--surface-2);
+  transition: opacity var(--md-short) var(--md-easing);
+}
+.source-card--off {
+  opacity: 0.62;
+}
+.source-card__head {
+  gap: 6px;
+}
+.source-card__head .btn {
+  margin-left: 0;
+}
+.source-card__hint {
+  margin: 8px 0 0;
+  font: var(--md-body-m);
+  color: var(--md-on-surface-variant);
+}
+.source-card__result {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  padding: 8px 12px;
+  border-radius: var(--md-shape-m);
+  font: var(--md-body-s);
+  font-size: calc(12.5px * var(--ts, 1));
+}
+.source-card__result.is-ok {
+  color: var(--success);
+  background: rgb(var(--md-on-surface-rgb) / 0.05);
+}
+.source-card__result.is-error {
+  color: var(--md-on-error-container);
+  background: var(--md-error-container);
+}
+
+/* Радио-список (движок, сеть) */
+.radio-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.radio-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: var(--md-shape-l);
+  border: 1px solid var(--md-outline-variant);
+  background: transparent;
+  text-align: left;
+  transition:
+    background var(--md-short) var(--md-easing),
+    border-color var(--md-short) var(--md-easing),
+    border-radius var(--md-medium) var(--md-spring);
+}
+.radio-item:hover {
+  background: rgb(var(--md-on-surface-rgb) / var(--md-state-hover));
+}
+.radio-item--on {
+  border-color: transparent;
+  border-radius: var(--md-shape-lx);
+  background: rgb(var(--md-secondary-container-rgb) / calc(0.5 + var(--surface-alpha) * 0.5));
+}
+.radio-item--on:hover {
+  background: var(--md-secondary-container);
+}
+.radio-item:disabled {
+  opacity: 0.45;
+}
+.radio-item__dot {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 2px solid var(--md-on-surface-variant);
+  transition: border-color var(--md-short) var(--md-easing);
+}
+.radio-item__dot::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: var(--md-primary);
+  transform: scale(0);
+  transition: transform var(--md-medium) var(--md-spring);
+}
+.radio-item--on .radio-item__dot {
+  border-color: var(--md-primary);
+}
+.radio-item--on .radio-item__dot::after {
+  transform: scale(1);
+}
+.radio-item__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.radio-item__label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font: var(--md-title-s);
+  color: var(--md-on-surface);
+}
+.radio-item--on .radio-item__label {
+  color: var(--md-on-secondary-container);
+}
+.radio-item__hint {
+  font: var(--md-body-m);
+  color: var(--md-on-surface-variant);
+}
+
+/* yt-dlp / Deno */
+.tool-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 4px 0 8px;
+  padding: 16px 18px;
+  border-radius: var(--md-shape-lx);
+  background: var(--surface-2);
+}
+.tool-card__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 36px;
+}
+.tool-card__head + .tool-card__hint + .tool-card__head {
+  margin-top: 8px;
+  padding-top: 12px;
+  border-top: 1px solid rgb(var(--md-outline-variant-rgb) / 0.5);
+}
+.tool-card__title {
+  font: var(--md-title-m);
+}
+.tool-card__hint {
+  font: var(--md-body-m);
+  color: var(--md-on-surface-variant);
+}
+.tool-card .field {
+  margin-top: 12px;
+}
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 24px;
+  padding: 0 10px;
+  border-radius: var(--md-shape-s);
+  font: var(--md-label-m);
+  color: var(--md-on-surface-variant);
+  background: var(--md-surface-container-highest);
+}
+.status--ok {
+  color: var(--success);
+}
+
+/* Выбор сида Material You */
+.seed-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.seed {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  background: var(--seed);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.12);
+  transition: border-radius var(--md-medium) var(--md-spring), transform var(--md-short) var(--md-easing);
+}
+.seed:hover {
+  border-radius: var(--md-shape-l);
+}
+.seed--on {
+  border-radius: var(--md-shape-l);
+  box-shadow: 0 0 0 3px var(--md-surface), 0 0 0 5px var(--seed);
+}
+.seed svg {
+  filter: drop-shadow(0 1px 2px rgb(0 0 0 / 0.5));
+}
+.seed--custom {
+  overflow: hidden;
+  background: conic-gradient(from 90deg, #f44336, #ff9800, #ffeb3b, #4caf50, #00bcd4, #3f51b5, #9c27b0, #f44336);
+  cursor: default;
+}
+.seed--custom input {
+  position: absolute;
+  inset: -8px;
+  width: calc(100% + 16px);
+  height: calc(100% + 16px);
+  opacity: 0;
+  cursor: default;
+}
+
+/* О программе */
+.about {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0 8px 4px;
+  font: var(--md-body-l);
+}
+.credits {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 6px;
+  margin-top: 6px;
+}
+.credit {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: var(--md-shape-l);
+  background: var(--surface-2);
+  color: var(--md-on-surface-variant);
+  text-align: left;
+  transition: background var(--md-short) var(--md-easing), border-radius var(--md-medium) var(--md-spring);
+}
+.credit:hover {
+  border-radius: var(--md-shape-lx);
+  background: color-mix(in srgb, var(--md-surface-container-highest) 88%, var(--md-on-surface));
+}
+.credit > svg:first-child {
+  color: var(--md-primary);
+}
+.credit__text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+.credit__name {
+  font: var(--md-title-s);
+  color: var(--md-on-surface);
+}
+.credit__what {
+  font: var(--md-body-s);
+}
+.shortcuts__row {
+  border-radius: var(--md-shape-m);
+}
+.eq {
+  border: 0;
+  border-radius: var(--md-shape-lx);
+  background: var(--surface-2);
+}
+
+/* ═════════════════════ Доступность ═════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  .page-hero::before,
+  .page-hero::after {
+    animation: none;
+  }
+  * {
+    transition-duration: 1ms !important;
+  }
+}
+
+/* Отчёт «Проверить YouTube» */
+.diag-report {
+  margin: 8px 0 0;
+  padding: 10px 12px;
+  max-height: 260px;
+  overflow: auto;
+  border-radius: var(--shape-sm, 8px);
+  background: var(--md-surface-container-highest, rgba(127, 127, 127, 0.12));
+  color: var(--md-on-surface-variant, inherit);
+  font: 12px/1.5 ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  white-space: pre-wrap;
+  word-break: break-word;
+  user-select: text;
+}

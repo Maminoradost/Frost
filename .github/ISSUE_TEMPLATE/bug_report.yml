@@ -1,0 +1,34 @@
+name: Ошибка
+description: Сообщить о проблеме в Frost
+title: "[Ошибка]: "
+labels: [bug]
+body:
+ - type: markdown
+   attributes:
+     value: Спасибо за подробности. Не вставляйте токены ListenBrainz, Last.fm или содержимое локальных файлов.
+ - type: textarea
+   id: what
+   attributes:
+     label: Что произошло?
+     description: Коротко опишите ожидаемый и фактический результат.
+   validations:
+     required: true
+ - type: textarea
+   id: steps
+   attributes:
+     label: Как повторить?
+     description: Перечислите шаги.
+ - type: textarea
+   id: report
+   attributes:
+     label: Отчёт Frost
+     description: Вставьте отчёт из Настройки → Данные → Скопировать отчёт.
+     render: text
+ - type: input
+   id: version
+   attributes:
+     label: Версия Frost
+ - type: input
+   id: windows
+   attributes:
+     label: Windows

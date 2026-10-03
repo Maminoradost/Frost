@@ -1,0 +1,64 @@
+# Сборка установщика для Windows и черновика релиза на GitHub.
+# Запуск: поставьте тег вида v0.9.0 и отправьте его (git push origin v0.9.0)
+# или нажмите «Run workflow» на вкладке Actions.
+# Версия берётся из src-tauri/tauri.conf.json, тег и название релиза: v<версия>.
+# Черновик нужно опубликовать вручную: только после этого Frost увидит обновление.
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    name: Установщик для Windows
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Найти папку проекта
+        id: app
+        shell: bash
+        run: |
+          if [ -f src-tauri/tauri.conf.json ]; then dir=.; elif [ -f frost/src-tauri/tauri.conf.json ]; then dir=frost; else echo "::error::Не найден src-tauri/tauri.conf.json"; exit 1; fi
+          echo "dir=$dir" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: lts/*
+          cache: npm
+          cache-dependency-path: ${{ steps.app.outputs.dir }}/package-lock.json
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: ${{ steps.app.outputs.dir }}/src-tauri -> target
+
+      - name: Зависимости
+        working-directory: ${{ steps.app.outputs.dir }}
+        run: npm ci
+
+      - uses: tauri-apps/tauri-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          projectPath: ${{ steps.app.outputs.dir }}
+          tagName: v__VERSION__
+          releaseName: Frost v__VERSION__
+          releaseBody: |
+            Установщик для Windows 10 и 11 (x64): файл `Frost_*_x64-setup.exe` ниже.
+            Что нового: см. CHANGELOG.md в репозитории.
+
+            Windows может показать предупреждение SmartScreen, потому что установщик не подписан:
+            «Подробнее» → «Выполнить в любом случае».
+          releaseDraft: true
+          prerelease: false
+          uploadWorkflowArtifacts: true

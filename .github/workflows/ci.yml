@@ -1,0 +1,95 @@
+# Проверка каждого пуша и пул-реквеста: типы, тесты и сборка интерфейса,
+# плюс компиляция Rust на Windows (cargo check и тесты).
+# Проект может лежать в корне репозитория или в папке frost/: папка определяется сама.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  frontend:
+    name: Интерфейс (типы, тесты, сборка)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Найти папку проекта
+        id: app
+        shell: bash
+        run: |
+          if [ -f src-tauri/tauri.conf.json ]; then dir=.; elif [ -f frost/src-tauri/tauri.conf.json ]; then dir=frost; else echo "::error::Не найден src-tauri/tauri.conf.json"; exit 1; fi
+          echo "dir=$dir" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: lts/*
+          cache: npm
+          cache-dependency-path: ${{ steps.app.outputs.dir }}/package-lock.json
+
+      - uses: oven-sh/setup-bun@v2
+
+      - name: Зависимости
+        working-directory: ${{ steps.app.outputs.dir }}
+        run: npm ci
+
+      - name: Проверка типов
+        working-directory: ${{ steps.app.outputs.dir }}
+        run: npm run typecheck
+
+      - name: Тесты
+        working-directory: ${{ steps.app.outputs.dir }}
+        run: bun test
+
+      - name: Сборка интерфейса
+        working-directory: ${{ steps.app.outputs.dir }}
+        run: npm run build
+
+  rust:
+    name: Rust (Windows)
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Найти папку проекта
+        id: app
+        shell: bash
+        run: |
+          if [ -f src-tauri/tauri.conf.json ]; then dir=.; elif [ -f frost/src-tauri/tauri.conf.json ]; then dir=frost; else echo "::error::Не найден src-tauri/tauri.conf.json"; exit 1; fi
+          echo "dir=$dir" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: lts/*
+          cache: npm
+          cache-dependency-path: ${{ steps.app.outputs.dir }}/package-lock.json
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: ${{ steps.app.outputs.dir }}/src-tauri -> target
+
+      # Tauri встраивает собранный интерфейс (dist) при компиляции, поэтому сначала собираем его
+      - name: Сборка интерфейса
+        working-directory: ${{ steps.app.outputs.dir }}
+        run: |
+          npm ci
+          npm run build
+
+      - name: cargo check
+        working-directory: ${{ steps.app.outputs.dir }}/src-tauri
+        run: cargo check --all-targets
+
+      - name: cargo test
+        working-directory: ${{ steps.app.outputs.dir }}/src-tauri
+        run: cargo test

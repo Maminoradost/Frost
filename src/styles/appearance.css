@@ -1,0 +1,165 @@
+/* ───────── Оформление из настроек: форма, текст, движение, плотность ───────── */
+
+/* Размер текста: множитель для всей шкалы типографики M3 */
+[data-text-scale="small"] { --ts: 0.92; }
+[data-text-scale="large"] { --ts: 1.1; }
+[data-text-scale="xlarge"] { --ts: 1.22; }
+
+/* Форма: шкала скруглений M3 (xs…xxl) целиком */
+[data-corner="small"] { --shape-k: 0.5; }
+[data-corner="large"] { --shape-k: 1.45; }
+
+/* Пружинное движение (M3 Expressive): пружины вместо кривых Безье.
+   Быстрая пространственная: затухание 0.6, жёсткость 800; обычная: 0.8 и 380. */
+[data-motion="spring"] {
+  --md-easing: linear(0, 0.0344, 0.1221, 0.2422, 0.3776, 0.5153, 0.6456, 0.762, 0.8609, 0.9409, 1.0021, 1.0457, 1.074, 1.0895, 1.0947, 1.0923, 1.0845, 1.0734, 1.0607, 1.0476, 1.0352, 1.0239, 1.0143, 1.0065, 1.0005, 0.9961, 0.9933, 0.9917, 0.991, 0.9912, 0.9919, 0.9929, 0.9941, 0.9953, 0.9965, 0.9976, 0.9985, 0.9993, 0.9999, 1);
+  --md-easing-decel: linear(0, 0.0194, 0.0694, 0.1395, 0.2214, 0.3087, 0.3967, 0.4819, 0.562, 0.6356, 0.7017, 0.76, 0.8106, 0.8539, 0.8902, 0.9203, 0.9448, 0.9644, 0.9797, 0.9914, 1.0002, 1.0064, 1.0106, 1.0133, 1.0147, 1.0152, 1.0149, 1.0142, 1.0132, 1.012, 1.0106, 1.0093, 1.008, 1.0068, 1.0057, 1.0046, 1.0037, 1.003, 1.0023, 1);
+  --md-spring: var(--md-easing);
+  --md-short: 220ms;
+  --md-medium: 417ms;
+  --md-long: 560ms;
+  --dur-2: 320ms;
+}
+
+/* Минимум движения: мгновенные переходы, анимации только для индикаторов загрузки */
+[data-motion="minimal"] {
+  --md-short: 0ms;
+  --md-medium: 0ms;
+  --md-long: 0ms;
+  --dur-2: 0ms;
+}
+[data-motion="minimal"] *:not(.spinner, .md-spinner, .loader),
+[data-motion="minimal"] *::before,
+[data-motion="minimal"] *::after {
+  animation-duration: 1ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 1ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* Компактный режим: плотнее каркас, списки и сетки */
+[data-compact="true"] {
+  --titlebar-h: 46px;
+  --sidebar-w: 232px;
+  --player-h: 76px;
+  --panel-w: 330px;
+  --gutter: 8px;
+}
+[data-compact="true"] .track-row { height: 46px; }
+[data-compact="true"] .card-grid { grid-template-columns: repeat(auto-fill, minmax(148px, 1fr)); gap: 10px; }
+[data-compact="true"] .queue-item { padding-block: 3px; }
+
+/* ───────── Настройки: стили палитры ───────── */
+.scheme-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+  padding: 4px 0 8px;
+}
+.scheme-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid transparent;
+  border-radius: var(--md-shape-l);
+  background: var(--md-surface-container);
+  color: var(--md-on-surface);
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--md-short) var(--md-easing), border-color var(--md-short) var(--md-easing);
+}
+.scheme-card:hover { background: var(--md-surface-container-high); }
+.scheme-card:focus-visible { outline: 2px solid var(--md-primary); outline-offset: 2px; }
+.scheme-card.is-active {
+  border-color: var(--md-primary);
+  background: var(--md-secondary-container);
+  color: var(--md-on-secondary-container);
+}
+.scheme-card__preview {
+  position: relative;
+  display: grid;
+  grid-template-columns: 26px 1fr;
+  grid-template-rows: 12px 10px 14px;
+  gap: 5px 8px;
+  padding: 10px;
+  border-radius: var(--md-shape-m);
+  overflow: hidden;
+}
+.scheme-card__preview i { display: block; border-radius: var(--md-shape-full); }
+.scheme-card__dot { grid-row: 1 / span 2; width: 26px; height: 26px; }
+.scheme-card__bar { height: 10px; align-self: center; }
+.scheme-card__bar--short { width: 60%; }
+.scheme-card__chips { grid-column: 1 / -1; display: flex; gap: 5px; }
+.scheme-card__chips i { flex: 1; height: 14px; }
+.scheme-card__label { font: var(--md-label-l); }
+.scheme-card__hint { font: var(--md-body-s); opacity: 0.8; }
+.scheme-card.is-active .scheme-card__label::after { content: " ✓"; }
+
+.appearance-preview-text { font: var(--md-body-m); color: var(--md-on-surface-variant); }
+
+/* ───────── Текст песни: инструменты, караоке, ручная синхронизация ───────── */
+.lyrics__toolbar { gap: 8px; }
+.lyrics__toolbar .lyrics__sources { flex: 1; min-width: 0; overflow-x: auto; scrollbar-width: none; }
+.lyrics__tools { display: inline-flex; align-items: center; gap: 2px; margin-left: auto; flex-shrink: 0; }
+.lyrics__tools .icon-btn.is-on {
+  color: var(--md-on-secondary-container);
+  background: var(--md-secondary-container);
+}
+.lyrics__search { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 4px 0 12px; }
+.lyrics__search .input { flex: 1 1 150px; min-width: 120px; }
+.lyrics__adjust { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 2px 0 12px; }
+.lyrics__offset {
+  min-width: 150px;
+  text-align: center;
+  font: var(--md-label-l);
+  font-variant-numeric: tabular-nums;
+  color: var(--md-on-surface-variant);
+}
+.lyrics__banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 2px 0 14px;
+  padding: 10px 14px;
+  border-radius: var(--md-shape-m);
+  background: var(--md-secondary-container);
+  color: var(--md-on-secondary-container);
+  font: var(--md-body-m);
+}
+.lyrics__banner--error { background: var(--md-error-container); color: var(--md-on-error-container); }
+.lyrics__banner-actions { display: inline-flex; gap: 4px; margin-left: auto; }
+.lyrics__empty { display: flex; flex-direction: column; align-items: center; gap: 12px; width: 100%; }
+.lyrics__empty .lyrics__search { justify-content: center; width: min(560px, 100%); }
+.lyrics__empty-actions { display: inline-flex; gap: 6px; }
+.lyrics__hint { margin: 0 0 14px; font: var(--md-body-m); color: var(--md-on-surface-variant); }
+.lyrics__tap-title { font: var(--md-title-s); }
+.lyrics__stamp {
+  display: inline-block;
+  min-width: 3.2em;
+  margin-right: 10px;
+  font: var(--md-label-m);
+  font-variant-numeric: tabular-nums;
+  color: var(--md-primary);
+  vertical-align: middle;
+}
+.lyrics--tap .lyrics__line.is-active { color: var(--md-primary); }
+
+/* Караоке: каждое слово заливается слева направо (по пословной разметке или оценке слогов) */
+.lyrics__line.is-karaoke { text-shadow: none; }
+.lyrics__word {
+  background-image: linear-gradient(
+    90deg,
+    var(--md-primary) var(--fill, 0%),
+    rgb(var(--md-on-surface-rgb) / 0.62) var(--fill, 0%)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* Мини-плеер: окно фиксированного размера, поэтому самый крупный текст ограничиваем */
+[data-text-scale="xlarge"] .mini { --ts: 1.1; }
